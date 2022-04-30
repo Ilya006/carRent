@@ -10,7 +10,7 @@
       <router-link class="haeder__nav" to="reservation">Reservation</router-link>
     </nav>
     <div>
-      <span class="header__name">name</span>
+      <router-link class="header__name" to="profile">name</router-link>
       <router-link class="contact" to="login" >Войти</router-link>
     </div>
     <div class="hamburger">

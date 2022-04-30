@@ -32,20 +32,11 @@
     </div>
 
     <div class="gallery" v-if="!isShow">
-      <div 
-        class="picture" 
-        data-name="berline"
-        @click="isShow = true"
-      >
-        <img src="./../pictures/berline-1.jpg" alt="berline">
-      </div>
-      <div 
-        class="picture" 
-        data-name="berline"
-        @click="isShow = true"
-      >
-        <img src="./../pictures/berline-2.jpg" alt="berline">
-      </div>
+      <Car :openRentCar="openRentCar" isRent />
+      <Car :openRentCar="openRentCar" />
+      <Car :openRentCar="openRentCar" />
+      <Car :openRentCar="openRentCar" />
+      <Car :openRentCar="openRentCar" />
     </div>
 
     <div class="select-overlay" v-if="isShow">
@@ -65,10 +56,11 @@
 import HeaderVue from "../components/app/Header.vue";
 import SelectBrand from './../components/SelectBrand.vue';
 import RentCar from './../components/RentCar.vue';
+import Car from './../components/Car.vue'
 
 export default {
   name: "home",
-  components: { HeaderVue, SelectBrand, RentCar },
+  components: { HeaderVue, SelectBrand, RentCar, Car },
 
   data: () => ({
     isShow: false,
@@ -89,6 +81,9 @@ export default {
       setTimeout(() => {
         this.isOpenHistory = false
       }, 200);
+    },
+    openRentCar() {
+      this.isShow = true
     }
   },
 };
