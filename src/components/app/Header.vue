@@ -9,7 +9,10 @@
       <router-link class="haeder__nav" to="gallery">Gallery</router-link>
       <router-link class="haeder__nav" to="reservation">Reservation</router-link>
     </nav>
-    <router-link class="contact" to="login" >Войти</router-link>
+    <div>
+      <span class="header__name">name</span>
+      <router-link class="contact" to="login" >Войти</router-link>
+    </div>
     <div class="hamburger">
       <div></div>
       <div></div>

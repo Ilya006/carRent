@@ -45,6 +45,8 @@ main {
   position: relative;
   top: 6px;
   transition: .3s;
+  background: url('../pictures/search.png') no-repeat center;
+  background-size: cover;
 }
 
 #search img:hover {
@@ -52,10 +54,12 @@ main {
 }
 
 .bar {
+  position: relative;
   text-align: center;
 }
 
 .bar .items {
+  background-color: white;
   display: inline-block;
   border-radius: 50px;
   border: 1.2px solid #dddddd;
@@ -152,7 +156,39 @@ main {
   margin-bottom: 25px;
 }
 
-.search-overlay div input {
+
+
+.search__img {
+  background: url('./../pictures/search.png') no-repeat center;
+  background-size: contain;;
+  position: relative;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.home--mt {
+  padding-top: 20px;
+  background-color: white;
+  min-height: calc(100vh - 76px);
+  transition: all 0.2s ease-in;
+}
+
+.home--dark {
+  background-color: rgb(46 45 45 / 20%);
+}
+
+.search__wrap {
+  display: flex;
+  align-items: center;
+}
+
+.search__from {
+  position: relative;
+  margin: 0 auto;
+}
+
+.search__input {
   padding: 20px 30px;
   width: 600px;
   color: #333;
@@ -160,12 +196,23 @@ main {
   font-size: 18px;
   box-shadow: 0px 16px 32px rgba(0, 0, 0, 0.15), 0px 3px 8px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
+  z-index: 99;
 }
 
-@media only screen and (max-width: 665px) {
-  .search-overlay div input {
-    width: 300px;
-  }
+.search__btn {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: url('./../pictures/search.png') no-repeat center;
+  background-size: 65%; 
+  cursor: pointer;
+}
+
+.search__btn:hover {
+  background-color: #ccc;
 }
 
 .search-overlay button {
@@ -222,7 +269,8 @@ footer {
 .select-overlay .close {
   width: 60px;
   height: 60px;
-  left: 0px;
+  left: 10px;
+  top: 10px;
   color: white;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
@@ -253,10 +301,52 @@ footer {
 }
 
 .rent--dark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: rgb(35 35 35 / 50%);
   height: calc(100vh - 76px);
 }
 
 .rent__form {
-  padding: 40px 0;
+  max-width: 300px !important;
+}
+
+.rent__form label {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.rent__form button {
+  width: 100% !important;
+  text-transform: uppercase;
+}
+
+.rent__form button:hover {
+  background-color: #0436c5;;
+}
+
+.search__history {
+  position: absolute;
+  top: 70px;
+  width: 100%;
+  list-style: none;
+  box-shadow: 0px 16px 32px rgb(0 0 0 / 20%), 0px 3px 8px rgb(0 0 0 / 15%);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 999;
+  background: #fff;
+}
+
+.search__history li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search__history li + li {
+  border-top: 1px solid #ccc;
+}
+
+.search__history li:hover {
+  background-color: #ccc;
 }

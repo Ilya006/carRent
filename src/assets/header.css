@@ -18,6 +18,7 @@ header {
   height: 76px;
   box-shadow: 0px 1px 1px #d0d4d9;
   z-index: 98;
+  border-bottom: 1px solid #d0d4d9;
 }
 
 .logo {
@@ -130,11 +131,8 @@ header nav {
   color: #fff;
 }
 
-@media only screen and (max-width: 800px) {
-  header nav a, .contact {
-    display: none;
-  }
-  .hamburger {
-    display: flex;
-  }
+.header__name {
+  font-weight: 700;
+  margin-right: 10px;
 }
+
