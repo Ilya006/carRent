@@ -80,10 +80,15 @@ export default {
     async login({commit}, { email, password }) {
       try {
         const auth = getAuth()
+
+        commit('setLoadingAuth', true)
         await signInWithEmailAndPassword(auth, email, password)
+
+        commit('setLoadingAuth', false)
         router.push('/')
       } 
-      catch (error) { 
+      catch (error) {
+        commit('setLoadingAuth', false) 
         commit('setErrorCode', error.code) 
       }
     },
