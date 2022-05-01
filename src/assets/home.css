@@ -1,3 +1,112 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 76px);
+  width: 100%;
+  color: white;
+  background-image: url('./../pictures/bgMain.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.banner p {
+  font-size: 56px;
+  margin-bottom: 18px;
+  cursor: default;
+}
+
+.banner svg {
+  position: absolute;
+  fill: #fff;
+  cursor: pointer;
+  top: 80%;
+  margin: 0 auto;
+  height: 90px;
+  animation: down-page 0.7s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes down-page {
+  0% {
+    transform: translateY(0px) rotate(180deg);
+  }
+  100% {
+    transform: translateY(10px) rotate(180deg);
+  }
+}
+
+.banner--dark {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 50%);
+  width: 100%;
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.collb {
+  margin: 70px 0;
+  text-align: center;
+  color: #80868b;
+}
+
+.collb .loges {
+  width: 70%;
+  margin: 40px auto 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.collb .loges img {
+  width: 100px;
+}
+
+
+
+.collb .loges img {
+  width: 100px;
+  margin: 20px;
+}
+
+.work {
+  width: 100%;
+  background-image: url('./../pictures/bg2.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 350px;
+  color: #fff;
+}
+
+.work p {
+  text-align: center;
+  font-size: 30px;
+  padding-top: 20px;
+}
+
+.work .info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 100px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.work .info div p {
+  font-size: 16px;
+}
+
+.work .info div span {
+  font-size: 14px;
+}
+
+
 .picture {
   width: 300px;
   margin: 10px;
@@ -39,9 +148,9 @@
   width: 100%;
   height: 50%;
   background-color: rgb(146 46 46 / 85%);
-  box-shadow: 0px 4px 80px 50px rgb(146 46 46); 
+  box-shadow: 0px 4px 80px 50px rgb(146 46 46);
   transition: all 0.3s ease-out;
-} 
+}
 
 .picture:hover .car {
   bottom: 0;

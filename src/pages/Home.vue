@@ -1,90 +1,62 @@
 <template>
-  <HeaderVue />
-  <div :class="isOpenHistory && 'home--dark'" class="home--mt">
-    <div class="search__wrap" v-if="!isShow">
-      <form class="search__from" @submit.prevent="onSearch">
-        <input 
-          class="search__input"
-          type="text" 
-          @focus="isOpenHistory = true"
-          @blur="blurSearch"
-          v-model="searchText"
+  <Header />
+
+  <main>
+    <div class="banner">
+      <div class="banner--dark">
+        <p>Арендуй автомобиль у нас!</p>
+        <span>Большой выбор автомобиля по доступным ценам!</span
         >
-        <button class="search__btn"></button>
-        <ul class="search__history" v-if="isOpenHistory">
-          <li>Дарк</li>
-          <li>мерст</li>
-          <li>танк</li>
-        </ul>
-      </form>
-    </div>
-
-    <div class="bar" v-if="!isShow">
-      <div class="items">
-        <SelectBrand 
-          v-for="brand in faceBrand"
-          :key="brand"
-          :name="brand"
-          :onActiveBrand="onActiveBrand"
-          :active="brand === selectBrand ? true : false"
-        />
+        <svg width="48px" viewBox="0 0 24 24">
+          <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+        </svg>
       </div>
     </div>
 
-    <div class="gallery" v-if="!isShow">
-      <Car :openRentCar="openRentCar" isRent />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
+    <div class="collb">
+      <p>С нами сотрудничают</p>
+      <div class="loges">
+        <img src="./../pictures/ford-logo.png" alt="ford-logo" />
+        <img src="./../pictures/Daimler-logo.png" alt="Daimler-logo" />
+        <img src="./../pictures/toyota-logo.png" alt="toyota-logo" />
+      </div>
     </div>
 
-    <div class="select-overlay" v-if="isShow">
-      <span class="close" @click="isShow = false">&times;</span>
+
+    <div class="work">
+      <p>Как это работает?</p>
+
       <div class="info">
-        <RentCar />
-      </div>
-      <div class="pic">
-        <img src="https://www.bugatti.com/fileadmin/_processed_/9/5/csm_HEADER_22de7ed3a8.jpg" alt="berline">
+        <div>
+          <img src="https://img.icons8.com/dusk/48/000000/key-not-in-vehicle--v2.png" alt="vehicle" />
+          <p>Выберите свой автомобиль</p>
+          <span>Выберите автомобиль по вашему вкусу</span>
+        </div>
+
+        <div>
+          <img src="https://img.icons8.com/color/48/000000/choose.png" alt="choose" />
+          <p>Бронируйте в несколько кликов</p>
+          <span>Без очередей и бюрократии</span>
+        </div>
+
+        <div>
+          <img src="https://img.icons8.com/dusk/48/000000/speed.png" alt="speed" />
+          <p>Садись за руль и вперед</p>
+          <span>Получить ключи очень быстро!</span>
+        </div>
       </div>
     </div>
-  </div>
+  </main>
 
+  <Footer />
 </template>
 
 <script>
-import HeaderVue from "../components/app/Header.vue";
-import SelectBrand from './../components/SelectBrand.vue';
-import RentCar from './../components/RentCar.vue';
-import Car from './../components/Car.vue'
+import Header from "./../components/app/Header.vue";
+import Footer from './../components/app/Footer.vue'
 
 export default {
-  name: "home",
-  components: { HeaderVue, SelectBrand, RentCar, Car },
-
-  data: () => ({
-    isShow: false,
-    selectBrand: 'All',
-    searchText: '',
-    isOpenHistory: false,
-    faceBrand: ['All', 'Bmw', 'Mazda', 'Toyota', 'mers', 'chiry', 'taxi']
-  }),
-
-  methods: {
-    onActiveBrand(name) {
-      this.selectBrand = name
-    },
-    onSearch() {
-      console.log(this.searchText)
-    },
-    blurSearch() {
-      setTimeout(() => {
-        this.isOpenHistory = false
-      }, 200);
-    },
-    openRentCar() {
-      this.isShow = true
-    }
-  },
+  name: "homePage",
+  components: { Header, Footer },
 };
 </script>
