@@ -54,7 +54,7 @@ export default {
     // Добавить количества марок авто
     async setModelCount(ctx,  { modelCar, action }) {
       const db = getDatabase()
-      const data = await get(ref(db, `model/${modelCar}`))
+      const data = await get(ref(db, `models/${modelCar}`))
       const countModel = data.val()
 
       const count = {
@@ -65,7 +65,7 @@ export default {
       const updateModelCount = {}
       updateModelCount[modelCar] = countModel ? count[action](countModel) : 1
 
-      const modelRef = ref(db, `model`)
+      const modelRef = ref(db, `models`)
       await update(modelRef, updateModelCount)
     }
 

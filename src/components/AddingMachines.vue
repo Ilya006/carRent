@@ -59,15 +59,17 @@ export default {
         return true
       }
     },
+    // Процесс добавления авто
     loadingAddCar() {
       return this.$store.getters.getLoadingAddCar
     }
   },
 
   methods: {
+    // Добавить машину 
     onSubmitNewCar() {
       const payload = {
-        modelCar:  this.modelCar, 
+        modelCar:  this.modelCar.split('')[0].toUpperCase() + this.modelCar.slice(1), 
         powerCar: this.powerCar, 
         imgCar: this.file
       }
@@ -96,11 +98,12 @@ export default {
 
 
   watch: {
+    // После добавления поста обновляем форму
     loadingAddCar() {
       if(!this.loadingAddCar) {
         this.modelCar = ''
         this.powerCar = ''
-        
+
         this.file = null
         this.showPreview = false
         this.imagePreview = null

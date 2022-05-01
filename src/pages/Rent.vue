@@ -22,11 +22,16 @@
     <div class="bar" v-if="!isShow">
       <div class="items">
         <SelectBrand 
-          v-for="brand in faceBrand"
-          :key="brand"
-          :name="brand"
+          :name="'All'"
           :onActiveBrand="onActiveBrand"
-          :active="brand === selectBrand ? true : false"
+          :active="selectBrand === 'All' ? true : false"  
+        />
+        <SelectBrand 
+          v-for="(brand, id) in models"
+          :key="id"
+          :name="id"
+          :onActiveBrand="onActiveBrand"
+          :active="id === selectBrand ? true : false"
         />
       </div>
     </div>
@@ -65,13 +70,21 @@ export default {
   name: "rent",
   components: { HeaderVue, Footer, SelectBrand, RentCar, Car },
 
+
   data: () => ({
     isShow: false,
     selectBrand: 'All',
     searchText: '',
     isOpenHistory: false,
-    faceBrand: ['All', 'Bmw', 'Mazda', 'Toyota', 'mers', 'chiry', 'taxi']
   }),
+
+
+  computed: {
+    models() {
+      return this.$store.getters.getModels
+    }
+  },
+
 
   methods: {
     onActiveBrand(name) {
@@ -89,5 +102,13 @@ export default {
       this.isShow = true
     }
   },
+
+
+  mounted() {
+    this.$store.dispatch('fetchModels')
+  },
+
+
+
 };
 </script>
