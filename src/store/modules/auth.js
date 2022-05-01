@@ -99,7 +99,6 @@ export default {
       try {
         const auth = getAuth()
         await signOut(auth)
-        console.log('logout')
         commit('setUserInfo', null)
       } 
       catch(error) { 

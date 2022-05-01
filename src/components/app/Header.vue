@@ -12,7 +12,7 @@
     <div>
       <router-link class="header__name" to="profile">{{userName}}</router-link>
       <router-link 
-        @click="userName ? onLogout : null"
+        @click="onLogout"
         to="login" 
         class="contact" 
       >
@@ -39,15 +39,9 @@ export default {
 
   methods: {
     onLogout() {
-      this.$store.dispatch('logout')
+      this.userName && this.$store.dispatch('logout')
     }
   },
-
-  watch: {
-    userName() {
-      console.log(this.userName)
-    }
-  }
 }
 </script>
 

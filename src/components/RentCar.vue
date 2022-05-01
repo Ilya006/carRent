@@ -7,11 +7,12 @@
         <input 
           id="rentDate"
           type="date"
-          placeholder="Username"
-          autocomplete="off"
-          autofocus
+          :min="currentDate"
         >
-        <button type="submit">Аренда!</button>
+        <router-link to="login" v-if="!isUserLogin">
+          <button>Авторизоваться!</button>
+        </router-link>
+        <button type="submit" v-if="isUserLogin">Аренда!</button>
       </form>
     </div>
   </div>
@@ -19,6 +20,16 @@
 
 <script>
 export default {
-  name: 'RentCar'
+  name: 'RentCar',
+
+  computed: {
+    isUserLogin() {
+      return !!this.$store.getters.getUserName
+    },
+    currentDate() {
+      const today = new Date();
+      return today.toISOString().split("T")[0];
+    }
+  },
 }
 </script>
