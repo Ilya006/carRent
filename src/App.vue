@@ -10,5 +10,21 @@
 
 export default {
   name: 'appCom',
+
+  computed: {
+    userId() {
+      return this.$store.getters.getUserId
+    },
+  },
+
+  watch: {
+    userId() {
+      userId && this.$store.dispatch('fetchInfo')
+    },
+  },
+
+  mounted() {
+    this.$store.dispatch('authStateChanged')
+  },
 }
 </script>

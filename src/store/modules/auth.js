@@ -106,10 +106,10 @@ export default {
         //   const data = snapshot.val()
         //   commit('setRentCar', data)
         // })
-      },
+    },
 
 
-      // Сесия
+    // Сесия
     authStateChanged({ commit }) {
       const auth = getAuth()
       onAuthStateChanged(auth, (user) => {
@@ -123,6 +123,6 @@ export default {
 
 
 
-    
+
   },
 }
