@@ -9,7 +9,7 @@
   color: #fff;
 }
 
-.form input, textarea {
+.form input {
   display: block;
   width: 100%;
   margin: 16px 0;
@@ -17,7 +17,12 @@
   padding: 12px;
   border-radius: 3px;
   color: #333;
+  border: 2px solid transparent;
   transition: border-color 0.4s ease-in-out;
+}
+
+.error {
+  border: 2px solid tomato !important;
 }
 
 .form button {
@@ -114,4 +119,18 @@
   color: white;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.form__auth button:hover {
+  background-color: #6292df;
+}
+
+.form__error {
+  color: #ff5e41;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.form__auth button:disabled {
+  background-color: #888;
 }

@@ -3,7 +3,7 @@
 
   <div class="container">
     <div class="container--bg">
-      <div class="form" @submit.prevent="onSubmitLogin">
+      <div class="form form__auth" @submit.prevent="onSubmitLogin">
         <h1>Войти</h1>
         <input 
           type="email" 

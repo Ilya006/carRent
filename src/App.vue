@@ -19,7 +19,7 @@ export default {
 
   watch: {
     userId() {
-      userId && this.$store.dispatch('fetchInfo')
+      this.userId && this.$store.dispatch('fetchInfo')
     },
   },
 

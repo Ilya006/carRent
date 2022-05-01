@@ -12,6 +12,7 @@ export default {
     userInfo: null,
     userId: null,
     errorAuth: null,
+    loadingAuth: false
   },
 
   mutations: {
@@ -27,6 +28,9 @@ export default {
     setUserInfo(state, userInfo) {
       state.userInfo = userInfo
     },
+    setLoadingAuth(state, isReady) {
+      state.loadingAuth = isReady
+    }
   },
 
   getters: {
@@ -41,6 +45,9 @@ export default {
     },
     getUserId(state) {
       return state.userId
+    },
+    getLoadingAuth(state) {
+      return state.loadingAuth
     }
   },
 
@@ -50,15 +57,20 @@ export default {
       try {
         const auth = getAuth()
         const db = getDatabase()
+
+        commit('setLoadingAuth', true)
         await createUserWithEmailAndPassword(auth, email, password)
         const userId = auth.currentUser.uid
         // Создать Имя
-        set(ref(db, `users/${userId}/data`), {
+        await set(ref(db, `users/${userId}/data`), {
           name
         })
+
+        commit('setLoadingAuth', false)
         router.push('/')
       }
       catch (error) { 
+        commit('setLoadingAuth', false)
         commit('setErrorCode', error.code) 
       }
     },
@@ -82,7 +94,8 @@ export default {
       try {
         const auth = getAuth()
         await signOut(auth)
-        commit('setUserName', null)
+        console.log('logout')
+        commit('setUserInfo', null)
       } 
       catch(error) { 
         commit('setErrorCode', error.code) 

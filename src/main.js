@@ -11,13 +11,13 @@ app.use(Vuex)
 app.use(store)
 app.use(router)
 app.use(initializeApp({
-  apiKey: "AIzaSyADxx984vK2Cn43hxYu7UiqYYjShCNUHPM",
-  authDomain: "carrent-47f0e.firebaseapp.com",
-  projectId: "carrent-47f0e",
-  storageBucket: "carrent-47f0e.appspot.com",
-  messagingSenderId: "321015275826",
-  appId: "1:321015275826:web:0aad2fb5c36ddd830d372b",
-  measurementId: "G-FCM9EHJMZP"
+  apiKey: "AIzaSyB7KR_dMsYmI2FbFq6IZLsAaqUNGn93VYo",
+  authDomain: "rentcar-42c83.firebaseapp.com",
+  projectId: "rentcar-42c83",
+  storageBucket: "rentcar-42c83.appspot.com",
+  messagingSenderId: "730750177003",
+  appId: "1:730750177003:web:08e40de99555f7b8e678ae",
+  measurementId: "G-WV0QREQNPG"
 }))
 
 app.mount('#app')

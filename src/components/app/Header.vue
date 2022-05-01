@@ -10,8 +10,14 @@
       <router-link class="haeder__nav" to="/">Информация</router-link>
     </nav>
     <div>
-      <router-link class="header__name" to="profile">name</router-link>
-      <router-link class="contact" to="login" >Войти</router-link>
+      <router-link class="header__name" to="profile">{{userName}}</router-link>
+      <router-link 
+        @click="userName ? onLogout : null"
+        to="login" 
+        class="contact" 
+      >
+        {{userName ? 'Выйти' : 'Войти'}}
+      </router-link>
     </div>
     <div class="hamburger">
       <div></div>
@@ -19,4 +25,29 @@
     </div>
   </header>
 </template>
+
+
+<script>
+export default {
+  name: 'headerCom',
+
+  computed: {
+    userName() {
+      return this.$store.getters.getUserName
+    }
+  },
+
+  methods: {
+    onLogout() {
+      this.$store.dispatch('logout')
+    }
+  },
+
+  watch: {
+    userName() {
+      console.log(this.userName)
+    }
+  }
+}
+</script>
 
