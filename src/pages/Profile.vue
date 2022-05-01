@@ -4,7 +4,7 @@
   <div class="profile">
     <div class="prifle--bg">
       <div class="profile__create">
-        <CreateCar />
+        <AddingMachines v-if="isAdmin"/>
       </div>
     </div>
   </div>
@@ -13,10 +13,16 @@
 
 <script>
 import HeaderVue from './../components/app/Header.vue'
-import CreateCar from './../components/CreateCar.vue'
+import AddingMachines from './../components/AddingMachines.vue'
 
 export default {
   name: 'profile',
-  components: { HeaderVue, CreateCar }
+  components: { HeaderVue, AddingMachines },
+
+  computed: {
+    isAdmin() {
+      return this.$store.getters.isAdmin
+    }
+  }
 }
 </script>

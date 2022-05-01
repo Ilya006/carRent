@@ -41,6 +41,10 @@
   box-shadow: 0 4px 8px rgba(0, 30, 84, 0.12);
 }
 
+.form button:disabled {
+  background-color: #888;
+}
+
 .form textarea {
   resize: none;
   height: 120px;
