@@ -12,11 +12,9 @@
           v-model="searchText"
           placeholder='Поиск машины'
         >
-        <button class="search__btn"></button>
+        <button class="search__btn" type="submit"></button>
         <ul class="search__history" v-if="isOpenHistory">
-          <li>Дарк</li>
-          <li>мерст</li>
-          <li>танк</li>
+          <li v-for="(item, id) in searchHistory" :key='id'>{{item[1]}}</li>
         </ul>
       </form>
     </div>
@@ -88,13 +86,14 @@ export default {
 
 
   data: () => ({
-    isShow: false,
     selectBrand: 'All',
     searchText: '',
-    imgUrlCarRent: '',
-    carRent: null,
     isReadyRent: false,
     isOpenHistory: false,
+
+    isShow: false,
+    carRent: null,
+    imgUrlCarRent: '',
   }),
 
 
@@ -107,31 +106,43 @@ export default {
     },
     userRentCar() {
       return this.$store.getters.getUserRentCar
+    },
+    searchHistory() {
+      return this.$store.getters.getSearchHistory
+    },
+    authUser() {
+      return !!this.$store.getters.getUserId
     }
   },
 
 
   methods: {
+    // Выбрать марку машины
     onActiveBrand(name) {
       this.selectBrand = name
     },
+    // Поиск машины по марке
     onSearch() {
-      console.log(this.searchText)
+      this.$store.dispatch('fetchSearchResults', this.searchText)
     },
+    // Убрать историю поиска
     blurSearch() {
       setTimeout(() => {
         this.isOpenHistory = false
       }, 200);
     },
+    // Установить значения для выбранного автомобиля
     openRentCar(imgUrl, car) {
       this.carRent = car
       this.imgUrlCarRent = imgUrl
       this.isShow = true
     },
+    // Очистить картинку после заркытия окна аренды
     clearImgCarRent() {
       this.imgUrlCarRent = ''
       this.carRent = null
     },
+    // После успешной аренды авто
     toggleRent() {
       this.isReadyRent = true
       setTimeout(() => {
@@ -140,6 +151,7 @@ export default {
         this.$router.push('/rent')
       }, 3000);
     },
+    // Арнедовать авто
     setRentCar(dateRent) {
       const payload = {
         carRent: this.carRent,
@@ -148,18 +160,21 @@ export default {
       }
       this.$store.dispatch('setRentCar', payload)
     },
+    // Получить картинку авто
     async fetchImagaCar(imgId) {
       const storage = getStorage()
       const imgRef = ref(storage, `car/${imgId}`)
       const imageUrl = await getDownloadURL(imgRef)
       return imageUrl
-    }
+    },
+
   },
 
 
   mounted() {
     this.$store.dispatch('fetchModels')
     this.$store.dispatch('fetchCars', 'All')
+    this.authUser && this.$store.dispatch('fetchSearchHistory')
   },
 
 
@@ -167,6 +182,12 @@ export default {
   watch: {
     selectBrand() {
       this.$store.dispatch('fetchCars', this.selectBrand)
+    },
+    searchHistory() {
+      console.log(this.searchHistory)
+    },
+    authUser() {
+      this.authUser && this.$store.dispatch('fetchSearchHistory')
     }
   }
 };

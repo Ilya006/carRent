@@ -33,15 +33,6 @@ export default {
   async mounted() {
     const imgUrl = await this.fetchImagaCar(this.car.imgCar)
     this.imgUrl = imgUrl
-
-    console.log(this.isRent)
   },
-
-
-  watch: {
-    isRent() {
-      console.log(this.isRent)
-    }
-  }
 }
 </script>

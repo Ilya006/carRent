@@ -1,10 +1,11 @@
-import { getDatabase, ref, onValue, query, orderByChild, equalTo, get, update } from "@firebase/database"
+import { getDatabase, ref, onValue, query, orderByChild, equalTo, get, update, remove } from "@firebase/database"
 
 export default {
   state: {
     models: null,
     availableСars: null,
     laodingCars: false,
+    searchHistory: null
   },
 
 
@@ -20,6 +21,12 @@ export default {
     },
     clearCars(state) {
       state.availableСars = null
+    },
+    setSearchHistory(state, history) {
+      state.searchHistory = history && Object
+      .keys(history)
+      .map(date => [date, history[date]])
+      .reverse()
     }
   },
 
@@ -33,7 +40,10 @@ export default {
     },
     getAvailableСars(state) {
       return state.availableСars
-    }
+    },
+    getSearchHistory(state) {
+      return state.searchHistory
+    },
   },
 
 
@@ -79,6 +89,45 @@ export default {
           console.log(error)
           commit('setLoadCars', false)
         }
+      }
+    },
+
+
+    // Получить историю поиска
+    fetchSearchHistory({ commit, rootState }) {
+      const db = getDatabase()
+      const userId = rootState.auth.userId
+      const searchRef = ref(db, `users/${userId}/searchHistory`)
+
+      onValue(searchRef, (snapshot) => {
+        const history = snapshot.val() 
+        commit('setSearchHistory', history)
+      })
+    },
+
+
+    // Результаты поиска
+    async fetchSearchResults({ commit, rootState }, searchText) {
+      const db = getDatabase()
+      const userId = rootState.auth.userId
+      const searchHistoryRef = ref(db, `users/${userId}/searchHistory`)
+
+      // Текщее дата в время
+      const date = new Date()
+      const dateDay = date.toISOString().split('T')[0]
+      const time = date.toLocaleTimeString()
+      
+      // Добавить историю поиска
+      const searchHistoryUpdate = {}
+      searchHistoryUpdate[`${dateDay} ${time}`] = searchText
+      await update(searchHistoryRef, searchHistoryUpdate)
+
+      // Очистить старую историю поиска
+      const history = rootState.rentCar.searchHistory
+      const removeRecord = history && history.length > 5 && history[5][0]
+      if(removeRecord) {
+        const recordRef = ref(db, `users/${userId}/searchHistory/${removeRecord}`)
+        remove(recordRef)
       }
     },
 
