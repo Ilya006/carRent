@@ -5,6 +5,7 @@
       <div class="car__title"><span>Модель: </span>Mazda</div>
       <div class="car__title"><span>Мощность: </span>123 л.с.</div>
     </div>
+    <span class="picture__viewed">Просмотрено</span>
   </div>
 </template>
 

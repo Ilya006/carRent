@@ -141,6 +141,22 @@
   animation: scali .4s ease;
 }
 
+.picture:hover .car {
+  bottom: 0;
+}
+
+.picture__viewed {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 0 5px;
+  background-color: rgba(206, 206, 206, 0.9);  
+  line-height: 1.5;
+  opacity: 0.8;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
 .car {
   position: absolute;
   bottom: -100%;
@@ -152,9 +168,6 @@
   transition: all 0.3s ease-out;
 }
 
-.picture:hover .car {
-  bottom: 0;
-}
 
 .car__title {
   margin-left: 10px;
