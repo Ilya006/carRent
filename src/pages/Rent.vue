@@ -47,6 +47,7 @@
         :openRentCar="openRentCar"
         :car="car"
         :fetchImagaCar='fetchImagaCar'
+        :userRentCar='userRentCar'
       />
     </div>
 
@@ -103,6 +104,9 @@ export default {
     },
     availableСars() {
       return this.$store.getters.getAvailableСars
+    },
+    userRentCar() {
+      return this.$store.getters.getUserRentCar
     }
   },
 
@@ -155,7 +159,15 @@ export default {
 
   mounted() {
     this.$store.dispatch('fetchModels')
-    this.$store.dispatch('fetchCars')
+    this.$store.dispatch('fetchCars', 'All')
   },
+
+
+
+  watch: {
+    selectBrand() {
+      this.$store.dispatch('fetchCars', this.selectBrand)
+    }
+  }
 };
 </script>

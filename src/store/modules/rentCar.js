@@ -54,7 +54,7 @@ export default {
     async fetchCars({ commit }, model) {
       const db = getDatabase()
 
-      if(!model) {
+      if(model === 'All') {
         const carsRef = ref(db, 'cars')
         commit('setLoadCars', true)
 
@@ -62,12 +62,13 @@ export default {
           const data = await get(carsRef)
           commit('setAvailableСars', data.val())
           commit('setLoadCars', false)
+          return 
         } catch (error) {
           console.log(error)
           commit('setLoadCars', false)
         }
       } else if(model) {
-        const que = query(ref('cars'), orderByChild('modelCar'), equalTo(model))
+        const que = query(ref(db, 'cars'), orderByChild('modelCar'), equalTo(model))
         commit('setLoadCars', true)
 
         try {
@@ -82,6 +83,7 @@ export default {
     },
 
 
+    // Аренда машины
     async setRentCar({ commit, rootState }, { carRent, dateRent, toggleRent }) {
       const db = getDatabase()
       const userId = rootState.auth.userId

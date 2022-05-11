@@ -10,6 +10,7 @@ export default {
 
   state: {
     userInfo: null,
+    userRentCar: null,
     userId: null,
     errorAuth: null,
     loadingAuth: false
@@ -30,6 +31,9 @@ export default {
     },
     setLoadingAuth(state, isReady) {
       state.loadingAuth = isReady
+    },
+    setRentCar(state, rentCar) {
+      state.userRentCar = rentCar && Object.values(rentCar)
     }
   },
 
@@ -48,6 +52,9 @@ export default {
     },
     getLoadingAuth(state) {
       return state.loadingAuth
+    },
+    getUserRentCar(state) {
+      return state.userRentCar
     }
   },
 
@@ -112,17 +119,17 @@ export default {
       const db = getDatabase()
       const userId = rootState.auth.userId
       const profileRef = ref(db, `users/${userId}/data`)
-      // const rentCarRef = ref(db, `users/${userId}/rent`)
+      const rentCarRef = ref(db, `users/${userId}/rent`)
 
         onValue(profileRef, (snapshot) => { 
           const data = snapshot.val()
           commit('setUserInfo', data)
         })
 
-        // onValue(rentCarRef, (snapshot) => {
-        //   const data = snapshot.val()
-        //   commit('setRentCar', data)
-        // })
+        onValue(rentCarRef, (snapshot) => {
+          const data = snapshot.val()
+          commit('setRentCar', data)
+        })
     },
 
 

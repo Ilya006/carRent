@@ -134,15 +134,6 @@
   transition: all .4s ease;
 }
 
-.picture.hide-image {
-  display: none;
-  transition: .4s;
-}
-
-.picture.show-image {
-  animation: scali .4s ease;
-}
-
 .picture:hover .car {
   bottom: 0;
 }
