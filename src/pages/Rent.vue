@@ -7,14 +7,23 @@
         <input 
           class="search__input"
           type="text" 
-          @focus="isOpenHistory = true"
+          @focus="() => {
+            isOpenHistory = true
+            selectBrand = 'All'
+          }"
           @blur="blurSearch"
           v-model="searchText"
           placeholder='Поиск машины'
         >
         <button class="search__btn" type="submit"></button>
         <ul class="search__history" v-if="isOpenHistory">
-          <li v-for="(item, id) in searchHistory" :key='id'>{{item[1]}}</li>
+          <li 
+            v-for="(item, id) in searchHistory" 
+            :key='id'
+            @click="onSearchHistory"
+          >
+            {{item[1]}}
+          </li>
         </ul>
       </form>
     </div>
@@ -38,7 +47,7 @@
     </div>
 
     <!-- Машины -->
-    <div class="gallery">
+    <div class="gallery" ref="gallery">
       <Car 
         v-for="car in availableСars"
         :key="car.imgCar"
@@ -102,6 +111,7 @@ export default {
       return this.$store.getters.getModels
     },
     availableСars() {
+      this.isOpenHistory = false
       return this.$store.getters.getAvailableСars
     },
     userRentCar() {
@@ -123,7 +133,8 @@ export default {
     },
     // Поиск машины по марке
     onSearch() {
-      this.$store.dispatch('fetchSearchResults', this.searchText)
+      this.$store.dispatch('fetchCars', this.searchText)
+      this.$store.dispatch('setSearchResults', this.searchText)
     },
     // Убрать историю поиска
     blurSearch() {
@@ -167,6 +178,11 @@ export default {
       const imageUrl = await getDownloadURL(imgRef)
       return imageUrl
     },
+    // Клик по истории поиска
+    onSearchHistory(e) {
+      this.searchText = e.target.innerHTML
+      this.onSearch()
+    }
 
   },
 
@@ -183,12 +199,14 @@ export default {
     selectBrand() {
       this.$store.dispatch('fetchCars', this.selectBrand)
     },
-    searchHistory() {
-      console.log(this.searchHistory)
-    },
     authUser() {
       this.authUser && this.$store.dispatch('fetchSearchHistory')
-    }
+    },
+    searchText() {
+      if(!this.searchText) {
+        this.$store.dispatch('fetchCars', 'All')
+      }
+    },
   }
 };
 </script>
