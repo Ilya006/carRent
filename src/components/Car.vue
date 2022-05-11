@@ -1,9 +1,9 @@
 <template>
-  <div class="picture" @click="openRentCar" >
-    <img src="./../pictures/berline-1.jpg" alt="berline" />
+  <div class="picture" @click="openRentCar(imgUrl, car.imgCar)" >
+    <img :src="imgUrl" alt="berline" />
     <div class="car">
-      <div class="car__title"><span>Модель: </span>Mazda</div>
-      <div class="car__title"><span>Мощность: </span>123 л.с.</div>
+      <div class="car__title"><span>Модель: </span>{{car.modelCar}}</div>
+      <div class="car__title"><span>Мощность: </span>{{car.powerCar}} л.с.</div>
     </div>
     <span class="picture__viewed">Просмотрено</span>
   </div>
@@ -12,6 +12,15 @@
 <script>
 export default {
   name: 'carCom',
-  props: ['openRentCar', 'isRent']
+  props: ['openRentCar', 'car', 'fetchImagaCar', 'isRent'],
+
+  data: () => ({
+    imgUrl: '',
+  }),
+
+  async mounted() {
+    const imgUrl = await this.fetchImagaCar(this.car.imgCar)
+    this.imgUrl = imgUrl
+  },
 }
 </script>

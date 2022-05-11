@@ -1,7 +1,8 @@
 <template>
   <HeaderVue />
   <div :class="isOpenHistory && 'home--dark'" class="home--mt">
-    <div class="search__wrap" v-if="!isShow">
+    <!-- Поиск машины -->
+    <div class="search__wrap" >
       <form class="search__from" @submit.prevent="onSearch">
         <input 
           class="search__input"
@@ -9,6 +10,7 @@
           @focus="isOpenHistory = true"
           @blur="blurSearch"
           v-model="searchText"
+          placeholder='Поиск машины'
         >
         <button class="search__btn"></button>
         <ul class="search__history" v-if="isOpenHistory">
@@ -19,7 +21,8 @@
       </form>
     </div>
 
-    <div class="bar" v-if="!isShow">
+    <!-- Марки машин -->
+    <div class="bar" >
       <div class="items">
         <SelectBrand 
           :name="'All'"
@@ -36,30 +39,42 @@
       </div>
     </div>
 
-    <div class="gallery" v-if="!isShow">
-      <Car :openRentCar="openRentCar" isRent />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
-      <Car :openRentCar="openRentCar" />
+    <!-- Машины -->
+    <div class="gallery">
+      <Car 
+        v-for="car in availableСars"
+        :key="car.imgCar"
+        :openRentCar="openRentCar"
+        :car="car"
+        :fetchImagaCar='fetchImagaCar'
+      />
     </div>
 
+    <!-- Окно аренды машины -->
     <div class="select-overlay" v-if="isShow">
       <span class="close" @click="isShow = false">&times;</span>
       <div class="info">
-        <RentCar />
+        <RentCar 
+          :clearImgCarRent='clearImgCarRent' 
+          :setRentCar='setRentCar'
+          :isReadyRent='isReadyRent'
+        />
       </div>
       <div class="pic">
-        <img src="https://www.bugatti.com/fileadmin/_processed_/9/5/csm_HEADER_22de7ed3a8.jpg" alt="berline">
+        <img :src="imgUrlCarRent" alt="berline">
       </div>
     </div>
   </div>
 
-  <Footer v-if="!isShow"/>
+  <div class="notification" :class="isReadyRent && 'notification--visible'">Машина успешна арнедована!</div>
+
+  <Footer v-if="!isShow" />
 
 </template>
 
 <script>
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 import HeaderVue from "../components/app/Header.vue";
 import Footer from './../components/app/Footer.vue'
 import SelectBrand from './../components/SelectBrand.vue';
@@ -75,6 +90,9 @@ export default {
     isShow: false,
     selectBrand: 'All',
     searchText: '',
+    imgUrlCarRent: '',
+    carRent: null,
+    isReadyRent: false,
     isOpenHistory: false,
   }),
 
@@ -82,6 +100,9 @@ export default {
   computed: {
     models() {
       return this.$store.getters.getModels
+    },
+    availableСars() {
+      return this.$store.getters.getAvailableСars
     }
   },
 
@@ -98,17 +119,43 @@ export default {
         this.isOpenHistory = false
       }, 200);
     },
-    openRentCar() {
+    openRentCar(imgUrl, car) {
+      this.carRent = car
+      this.imgUrlCarRent = imgUrl
       this.isShow = true
+    },
+    clearImgCarRent() {
+      this.imgUrlCarRent = ''
+      this.carRent = null
+    },
+    toggleRent() {
+      this.isReadyRent = true
+      setTimeout(() => {
+        this.isReadyRent = false
+        this.isShow = false
+        this.$router.push('/rent')
+      }, 3000);
+    },
+    setRentCar(dateRent) {
+      const payload = {
+        carRent: this.carRent,
+        dateRent,
+        toggleRent: this.toggleRent, 
+      }
+      this.$store.dispatch('setRentCar', payload)
+    },
+    async fetchImagaCar(imgId) {
+      const storage = getStorage()
+      const imgRef = ref(storage, `car/${imgId}`)
+      const imageUrl = await getDownloadURL(imgRef)
+      return imageUrl
     }
   },
 
 
   mounted() {
     this.$store.dispatch('fetchModels')
+    this.$store.dispatch('fetchCars')
   },
-
-
-
 };
 </script>

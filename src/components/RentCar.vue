@@ -1,18 +1,26 @@
 <template>
   <div class="rent">
     <div class="rent--dark">
-      <form class="form rent__form">
+      <form class="form rent__form" @submit.prevent="onRentCar">
         <h1>Арендовать</h1>
         <label for="rentDate">Взять на прокат до:</label>
         <input 
           id="rentDate"
           type="date"
           :min="currentDate"
+          v-model="dateRent"
         >
         <router-link to="login" v-if="!isUserLogin">
           <button>Авторизоваться!</button>
         </router-link>
-        <button type="submit" v-if="isUserLogin">Аренда!</button>
+        <button 
+          v-if="isUserLogin" 
+          :disabled='isReadyRent || !dateRent'
+          type="submit" 
+          :class="isReadyRent && 'btn--ready'"
+        >
+          {{isReadyRent ? 'Готова' : 'Арендовать!'}}
+        </button>
       </form>
     </div>
   </div>
@@ -21,6 +29,13 @@
 <script>
 export default {
   name: 'RentCar',
+  props: ['clearImgCarRent', 'setRentCar', 'isReadyRent'],
+
+
+  data: () => ({
+    dateRent: ''
+  }),
+
 
   computed: {
     isUserLogin() {
@@ -31,5 +46,17 @@ export default {
       return today.toISOString().split("T")[0];
     }
   },
+
+
+  methods: {
+    onRentCar() {
+      this.setRentCar(this.dateRent)
+    },
+  },
+
+
+  unmounted() {
+    this.clearImgCarRent()
+  }
 }
 </script>

@@ -115,6 +115,8 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  min-height: 229px;
+  background-color: #ccc;
 }
 
 .picture:hover {
@@ -178,4 +180,23 @@
 
 .car__title span {
   font-weight: normal;
+}
+
+.notification {
+  position: fixed;
+  top: 100px;
+  right: -100%;
+  padding: 20px;
+  border-radius: 33px;
+  background-color: #3ac13a;
+  transition: right 0.6s ease-in-out;
+  z-index: 999;
+}
+
+.notification--visible {
+  right: 1%;
+}
+
+.btn--ready {
+  background-color: #3ac13a !important;
 }

@@ -1,8 +1,9 @@
-import { getDatabase, ref, onValue } from "@firebase/database"
+import { getDatabase, ref, onValue, query, orderByChild, equalTo, get, update } from "@firebase/database"
 
 export default {
   state: {
     models: null,
+    availableСars: null,
     laodingCars: false,
   },
 
@@ -13,6 +14,12 @@ export default {
     },
     setModels(state, models) {
       state.models = models
+    },
+    setAvailableСars(state, cars) {
+      state.availableСars = cars
+    },
+    clearCars(state) {
+      state.availableСars = null
     }
   },
 
@@ -23,6 +30,9 @@ export default {
     },
     getModels(state) {
       return state.models
+    },
+    getAvailableСars(state) {
+      return state.availableСars
     }
   },
 
@@ -38,6 +48,54 @@ export default {
         commit('setModels', models)
       })
     },
+
+
+    // Получить доступные машины
+    async fetchCars({ commit }, model) {
+      const db = getDatabase()
+
+      if(!model) {
+        const carsRef = ref(db, 'cars')
+        commit('setLoadCars', true)
+
+        try {
+          const data = await get(carsRef)
+          commit('setAvailableСars', data.val())
+          commit('setLoadCars', false)
+        } catch (error) {
+          console.log(error)
+          commit('setLoadCars', false)
+        }
+      } else if(model) {
+        const que = query(ref('cars'), orderByChild('modelCar'), equalTo(model))
+        commit('setLoadCars', true)
+
+        try {
+          const data = await get(que)
+          commit('setAvailableСars', data.val())
+          commit('setLoadCars', false)
+        } catch (error) {
+          console.log(error)
+          commit('setLoadCars', false)
+        }
+      }
+    },
+
+
+    async setRentCar({ commit, rootState }, { carRent, dateRent, toggleRent }) {
+      const db = getDatabase()
+      const userId = rootState.auth.userId
+      const rentCarRef = ref(db, `users/${userId}/rent/`)
+      const rentCarUpdate = {}
+      rentCarUpdate[carRent] = {carRent, dateRent}
+
+      try {
+        await update(rentCarRef, rentCarUpdate)
+        toggleRent()
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
 
 

@@ -140,6 +140,7 @@ main {
 }
 
 .home--mt {
+  position: relative;
   background-color: white;
   min-height: calc(100vh - 76px);
   transition: all 0.2s ease-in;
@@ -228,7 +229,8 @@ footer {
 }
 
 .select-overlay {
-  position: relative;
+  position: absolute;
+  top: 0;
   display: flex;
   background-color: #fff;
   justify-content: center;
