@@ -115,12 +115,16 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  min-height: 229px;
+  height: 229px;
   background-color: #ccc;
 }
 
 .picture:hover {
   box-shadow: 0px 11px 25px 5px #00000040;
+}
+
+.picture:hover .profile__btn {
+  opacity: 1;
 }
 
 .picture:hover img {

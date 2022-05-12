@@ -2,7 +2,7 @@
   <HeaderVue />
   <div :class="isOpenHistory && 'home--dark'" class="home--mt">
     <!-- Поиск машины -->
-    <div class="search__wrap" >
+    <div class="search__wrap" v-if="!isShow">
       <form class="search__from" @submit.prevent="onSearch">
         <input 
           class="search__input"
@@ -160,7 +160,7 @@ export default {
         this.isReadyRent = false
         this.isShow = false
         this.$router.push('/rent')
-      }, 3000);
+      }, 2000);
     },
     // Арнедовать авто
     setRentCar(dateRent) {

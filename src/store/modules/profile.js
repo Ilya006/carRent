@@ -1,4 +1,4 @@
-import { child, get, getDatabase, push, ref, update } from "@firebase/database"
+import { child, get, getDatabase, push, ref, remove, update } from "@firebase/database"
 import { getStorage, ref as refStorage, uploadBytes } from "firebase/storage"
 
 export default {
@@ -38,6 +38,17 @@ export default {
       }
     },
 
+
+
+    //Отменить Аренду авто
+    async cancelRent({ rootState }, idCar) {
+      const db = getDatabase()
+      const userId = rootState.auth.userId
+      const rentCarRef = ref(db, `users/${userId}/rent/${idCar}`)
+      await remove(rentCarRef)
+      console.log('remove')
+    },  
+  
 
 
     // Добавить картинку на сервер
