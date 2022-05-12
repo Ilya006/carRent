@@ -110,7 +110,7 @@ export default {
 
 
     // Установить историю поиска
-    async setSearchResults({ commit, rootState }, searchText) {
+    async setSearchResults({ rootState }, searchText) {
       console.log(`search Text: ${searchText}`)
 
       const db = getDatabase()
@@ -140,7 +140,7 @@ export default {
 
 
     // Аренда машины
-    async setRentCar({ commit, rootState }, { carRent, dateRent, toggleRent }) {
+    async setRentCar({ commit, rootState, dispatch }, {carRent, dateRent, toggleRent}) {
       const db = getDatabase()
       const userId = rootState.auth.userId
       const rentCarRef = ref(db, `users/${userId}/rent/`)
@@ -149,7 +149,28 @@ export default {
 
       try {
         await update(rentCarRef, rentCarUpdate)
+        await dispatch('setAdminRentCar', {carRent, action: 'add', dateRent, })
         toggleRent()
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+    // Установить арнедованные авто для админа
+    async setAdminRentCar({ rootState }, {carRent, action, dateRent, anotherUserId}) {
+      const db = getDatabase()
+      const userId = rootState.auth.userId
+      const userName = rootState.auth.userInfo.name
+      
+      try {
+        if(action === 'add') {
+          const adminRentRef = ref(db, `adminRent/${carRent}/users/${userId}`)
+          await update(adminRentRef, {carRent, dateRent, userName})
+        } else if(action === 'remove') {
+          const adminRentRef = ref(db, `adminRent/${carRent}/users/${anotherUserId || userId}`)
+          remove(adminRentRef)
+        }
       } catch (error) {
         console.log(error)
       }

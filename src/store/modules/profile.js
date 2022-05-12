@@ -41,12 +41,13 @@ export default {
 
 
     //Отменить Аренду авто
-    async cancelRent({ rootState }, idCar) {
+    async cancelRent({ rootState, dispatch }, idCar) {
       const db = getDatabase()
       const userId = rootState.auth.userId
       const rentCarRef = ref(db, `users/${userId}/rent/${idCar}`)
+
       await remove(rentCarRef)
-      console.log('remove')
+      await dispatch('setAdminRentCar', {idCar, action: 'remove'})
     },  
   
 
