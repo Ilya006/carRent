@@ -54,6 +54,7 @@ export default {
 
   methods: {
     onSubmitLogin() {
+      this.$store.commit('clearError')
       this.$store.dispatch('login', {
         email: this.email, 
         password: this.password
