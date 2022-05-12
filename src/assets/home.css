@@ -115,7 +115,7 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  min-height: 229px;
+  height: 229px;
   background-color: #ccc;
 }
 

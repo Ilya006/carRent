@@ -64,6 +64,7 @@ export default {
 
   methods: {
     onSubmitRegister() {
+      this.$store.commit('clearError')
       this.$store.dispatch('register', {
         name: this.userName, 
         email: this.email, 

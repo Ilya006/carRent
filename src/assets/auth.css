@@ -130,6 +130,7 @@
 }
 
 .form__error {
+  text-align: center;
   color: #ff5e41;
   font-weight: 400;
   font-size: 17px;

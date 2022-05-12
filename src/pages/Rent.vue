@@ -47,7 +47,7 @@
     </div>
 
     <!-- Машины -->
-    <div class="gallery" ref="gallery">
+    <div class="gallery" ref="gallery" v-show="!isShow">
       <Car 
         v-for="car in availableСars"
         :key="car.imgCar"
@@ -111,7 +111,6 @@ export default {
       return this.$store.getters.getModels
     },
     availableСars() {
-      this.isOpenHistory = false
       return this.$store.getters.getAvailableСars
     },
     userRentCar() {
