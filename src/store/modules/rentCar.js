@@ -111,8 +111,6 @@ export default {
 
     // Установить историю поиска
     async setSearchResults({ rootState }, searchText) {
-      console.log(`search Text: ${searchText}`)
-
       const db = getDatabase()
       const userId = rootState.auth.userId
       const searchHistoryRef = ref(db, `users/${userId}/searchHistory`)
@@ -140,7 +138,7 @@ export default {
 
 
     // Аренда машины
-    async setRentCar({ commit, rootState, dispatch }, {carRent, dateRent, toggleRent}) {
+    async setRentCar({ rootState, dispatch }, {carRent, dateRent, toggleRent}) {
       const db = getDatabase()
       const userId = rootState.auth.userId
       const rentCarRef = ref(db, `users/${userId}/rent/`)
@@ -170,6 +168,11 @@ export default {
         } else if(action === 'remove') {
           const adminRentRef = ref(db, `adminRent/${carRent}/users/${anotherUserId || userId}`)
           await remove(adminRentRef)
+          
+          if(anotherUserId) {
+            const userRentRef = ref(db, `users/${anotherUserId}/rent/${carRent}`)
+            await remove(userRentRef)
+          }
         }
       } catch (error) {
         console.log(error)

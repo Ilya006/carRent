@@ -177,6 +177,12 @@
   font-weight: normal;
 }
 
+.car__title--card {
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
 .notification {
   position: fixed;
   top: 100px;

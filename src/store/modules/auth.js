@@ -129,7 +129,6 @@ export default {
 
         onValue(rentCarRef, (snapshot) => {
           const data = snapshot.val()
-          console.log(data)
           commit('setRentCar', data)
         })
     },

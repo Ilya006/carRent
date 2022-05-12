@@ -1,20 +1,27 @@
-import { child, get, getDatabase, push, ref, remove, update } from "@firebase/database"
+import { child, get, getDatabase, onValue, push, ref, remove, update } from "@firebase/database"
 import { getStorage, ref as refStorage, uploadBytes } from "firebase/storage"
 
 export default {
   state: {
+    allRent: null,
     loadingAddCar: false,
   },
 
   mutations: {
     setAddNewCar(state, isLoad) {
       state.loadingAddCar = isLoad
+    },
+    setAllRent(state, rent) {
+      state.allRent = rent
     }
   },
 
   getters: {
     getLoadingAddCar(state) {
       return state.loadingAddCar
+    },
+    getAllRent(state) {
+      return state.allRent && state.allRent
     }
   },
 
@@ -79,6 +86,18 @@ export default {
 
       const modelRef = ref(db, `models`)
       await update(modelRef, updateModelCount)
+    },
+
+
+
+    async fetchAllRent({commit}) {
+      const db = getDatabase()
+      const allRentRef = ref(db, 'adminRent')
+
+      onValue(allRentRef, (snapshot) => {
+        const rent = snapshot.val()
+        commit('setAllRent', rent)
+      })
     }
 
 
