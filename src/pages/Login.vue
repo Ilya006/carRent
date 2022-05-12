@@ -60,6 +60,10 @@ export default {
         password: this.password
       })
     }
+  },
+
+  unmounted() {
+    this.$store.commit('clearError')
   }
 }
 </script>

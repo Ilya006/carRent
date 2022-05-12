@@ -72,5 +72,9 @@ export default {
       })
     },
   },
+
+  unmounted() {
+    this.$store.commit('clearError')
+  }
 }
 </script>

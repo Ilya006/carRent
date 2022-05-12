@@ -27,6 +27,9 @@ export default {
       .keys(history)
       .map(date => [date, history[date]])
       .reverse()
+    },
+    clearSearchHistory(state) {
+      state.searchHistory = null
     }
   },
 

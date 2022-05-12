@@ -106,6 +106,7 @@ export default {
       try {
         const auth = getAuth()
         await signOut(auth)
+        commit('clearSearchHistory')
         commit('setUserInfo', null)
       } 
       catch(error) { 
