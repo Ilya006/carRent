@@ -47,7 +47,7 @@ export default {
       const rentCarRef = ref(db, `users/${userId}/rent/${idCar}`)
 
       await remove(rentCarRef)
-      await dispatch('setAdminRentCar', {idCar, action: 'remove'})
+      await dispatch('setAdminRentCar', {carRent: idCar, action: 'remove'})
     },  
   
 

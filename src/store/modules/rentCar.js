@@ -166,10 +166,10 @@ export default {
       try {
         if(action === 'add') {
           const adminRentRef = ref(db, `adminRent/${carRent}/users/${userId}`)
-          await update(adminRentRef, {carRent, dateRent, userName})
+          await update(adminRentRef, {dateRent, userName})
         } else if(action === 'remove') {
           const adminRentRef = ref(db, `adminRent/${carRent}/users/${anotherUserId || userId}`)
-          remove(adminRentRef)
+          await remove(adminRentRef)
         }
       } catch (error) {
         console.log(error)
