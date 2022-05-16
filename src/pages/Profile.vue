@@ -25,9 +25,9 @@
         </div>
       </div> 
 
-      <div class="profile__rent">
+      <div class="profile__rent" v-if="isAdmin">
         <div class="prifle--bg">
-          <h1 class="profile__title">Арендованные машины:</h1>
+          <h1 class="profile__title">Арендованные машины людьми:</h1>
           <div class="gallery">
             <CarRentProfile 
               v-for="(users, id) in allRent"
@@ -37,6 +37,7 @@
               :fetchImagaCar="fetchImagaCar"
               :fetchInfoCar="fetchInfoCar"
               :onShowListRent="onShowListRent"
+              :setShowData="setShowData"
             />
           </div>
         </div>
@@ -46,9 +47,10 @@
   </div>
 
   <ListRent 
-    v-if="isShowListRent && userList" 
-    :userList="userList.users" 
+    v-if="isShowListRent && usersList" 
+    :usersList="usersList"
     :onClearRentUser="onClearRentUser" 
+    :onCloseShowListRent="onCloseShowListRent"
   />
 </template>
 
@@ -69,7 +71,7 @@ export default {
 
   data: () => ({
     isShowListRent: false, 
-    userList: null,
+    usersList: null,
     userRentCar: null
   }),
 
@@ -101,11 +103,21 @@ export default {
       const car = await get(carRef)
       return car.val()
     },
-    onShowListRent(users, car) {
+    // Открыть меню аренды машин
+    onShowListRent() {
       this.isShowListRent = true
-      this.userList = users
+    },
+    setShowData(users, car) {
+      this.usersList = users
       this.userRentCar = car
     },
+    // Закрыть меню аренды машин
+    onCloseShowListRent() {
+      this.isShowListRent = false
+      this.usersList = null
+      this.userRentCar = null
+    },
+    // Отменить арнеду машины
     onClearRentUser(userId) {
       const payload = {
         carRent: this.userRentCar,
@@ -129,9 +141,9 @@ export default {
         this.$store.dispatch('fetchAllRent')
       }
     },
-    allRent() {
-      console.log(this.allRent)
-    },
+    // usersList() {
+    //   console.log(this.usersList)
+    // }
   }
 }
 </script>

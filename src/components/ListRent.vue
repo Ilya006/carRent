@@ -1,10 +1,10 @@
 <template>
-  <div class="menu">
+  <div class="menu" @click="onCloseList">
     <div class="menu__wapper">
       <h2 class="menu__title">Машину арендовали:</h2>
 
       <ul class="menu__list">
-        <li class="menu__item" v-for="(user, id) in userList" :key="id">
+        <li class="menu__item" v-for="(user, id) in users" :key="id">
           <div>
             <span>Имя:</span>
             {{user.userName}}
@@ -24,5 +24,21 @@
 <script>
 export default {
   name: 'ListRentUser',
-  props: ['userList', 'onClearRentUser'],
+  props: ['usersList', 'onClearRentUser', 'onCloseShowListRent'],
+
+  computed: {
+    users() {
+      return this.usersList.users
+    }
+  },
+
+  methods: {
+    onCloseList(e) {
+      if(e.target.classList[0] === 'menu') {
+        this.onCloseShowListRent()
+      }
+    },
+  },
+  
+
 }</script>

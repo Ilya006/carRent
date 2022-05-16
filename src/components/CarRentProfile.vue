@@ -6,7 +6,7 @@
       <div class="car__title"><span>Мощность: </span>{{infoCar && infoCar.powerCar}} л.с.</div>
       <button 
         class="car__title car__title--card contact" 
-        @click="onShowListRent(users, car)"
+        @click="onShowList"
       >
         Показать список
       </button>
@@ -17,8 +17,7 @@
 <script>
 export default {
   name: 'carCom',
-  props: ['car', 'fetchImagaCar', 'fetchInfoCar', 'users', 'onShowListRent'],
-
+  props: ['car', 'fetchImagaCar', 'fetchInfoCar', 'users', 'onShowListRent', 'setShowData'],
 
   data: () => ({
     imgUrl: '',
@@ -27,7 +26,10 @@ export default {
   }),
 
   methods: {
-
+    onShowList() {
+      this.onShowListRent()
+      this.setShowData(this.users, this.car)
+    }
   },
 
   async mounted() {
@@ -37,5 +39,11 @@ export default {
     const imgUrl = await this.fetchImagaCar(this.car)
     this.imgUrl = imgUrl
   },
+
+  watch: {
+    users() {
+      this.setShowData(this.users, this.car)
+    }
+  }
 }
 </script>
