@@ -39,6 +39,12 @@ export default {
       }
     },
   },
+
+  // watch: {
+  //   usersList() {
+  //     console.log(this.usersList)
+  //   }
+  // }
   
 
 }</script>

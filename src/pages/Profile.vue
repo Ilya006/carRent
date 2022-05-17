@@ -38,6 +38,7 @@
               :fetchInfoCar="fetchInfoCar"
               :onShowListRent="onShowListRent"
               :setShowData="setShowData"
+              :onCloseShowListRent="onCloseShowListRent"
             />
           </div>
         </div>
@@ -141,9 +142,9 @@ export default {
         this.$store.dispatch('fetchAllRent')
       }
     },
-    // usersList() {
-    //   console.log(this.usersList)
-    // }
+    allRent() {
+      console.log(this.allRent)
+    }
   }
 }
 </script>

@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'carCom',
-  props: ['car', 'fetchImagaCar', 'fetchInfoCar', 'users', 'onShowListRent', 'setShowData'],
+  props: ['car', 'fetchImagaCar', 'fetchInfoCar', 'users', 'onShowListRent', 'setShowData', 'onCloseShowListRent'],
 
   data: () => ({
     imgUrl: '',
@@ -40,10 +40,14 @@ export default {
     this.imgUrl = imgUrl
   },
 
-  watch: {
-    users() {
-      this.setShowData(this.users, this.car)
-    }
-  }
+  unmounted() {
+    this.onCloseShowListRent()
+  },
+
+  // watch: {
+  //   users() {
+  //     this.setShowData(this.users, this.car)
+  //   },
+  // }
 }
 </script>
